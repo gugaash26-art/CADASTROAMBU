@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0756A3">
+  <meta name="description" content="Registre a chegada de ambulâncias e informe a saída quando ela acontecer.">
+  <title>Cadastrar viagem — Controle de Ambulâncias</title>
+  <link rel="icon" type="image/svg+xml" href="/rota-symbol.svg">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/src/cadastro.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="/" aria-label="Controle de Ambulâncias — início"><img src="/rota-symbol.svg" width="42" height="42" alt=""><span>Controle de <strong>Ambulâncias</strong></span></a>
+      <nav class="main-nav" aria-label="Navegação principal">
+        <a class="active" aria-current="page" href="/cadastro.html">Cadastrar viagem</a>
+        <a href="/baixar.html">Histórico e ODS</a>
+      </nav>
+    </div>
+  </header>
+  <main id="conteudo" class="page-main">
+    <div class="page-heading">
+      <div><p class="eyebrow"><span class="route-dash" aria-hidden="true"></span> ETAPA 01 / CHEGADA</p><h1>Cadastrar viagem</h1><p class="page-intro">Registre os dados na chegada. O horário de saída é opcional e pode ser completado quando a ambulância partir.</p></div>
+      <a class="text-link" href="/baixar.html">Ver histórico <span aria-hidden="true">→</span></a>
+    </div>
+
+    <div class="entry-layout">
+      <section class="form-panel" aria-labelledby="form-title">
+        <div class="panel-heading"><span class="panel-index">01</span><div><h2 id="form-title">Novo atendimento</h2><p>Preencha os campos marcados com <span class="required-mark">*</span>. A saída pode ficar pendente.</p></div></div>
+        <form id="record-form" autocomplete="off">
+          <fieldset class="form-section">
+            <legend><span class="legend-line"></span> Horários da viagem</legend>
+            <div class="field-grid field-grid-two">
+              <label class="field"><span>Horário de entrada <b aria-hidden="true">*</b></span><input name="entrada" type="time" required aria-required="true"></label>
+              <label class="field"><span>Horário de saída</span><input name="saida" type="time" aria-describedby="saida-help"><small id="saida-help" class="field-help">Opcional. Registre quando a ambulância partir.</small></label>
+            </div>
+          </fieldset>
+          <fieldset class="form-section">
+            <legend><span class="legend-line"></span> Transporte</legend>
+            <div class="field-grid field-grid-two">
+              <label class="field"><span>Motorista <b aria-hidden="true">*</b></span><input name="motorista" type="text" maxlength="120" autocomplete="off" required aria-required="true" placeholder="Nome do motorista"></label>
+              <label class="field"><span>Empresa <b aria-hidden="true">*</b></span><input name="empresa" type="text" maxlength="120" required aria-required="true" placeholder="Nome da empresa"></label>
+              <label class="field field-span"><span>Placa ou prefixo <b aria-hidden="true">*</b></span><input name="veiculo" type="text" maxlength="40" required aria-required="true" placeholder="Ex.: ABC-1D23 ou prefixo 24"></label>
+            </div>
+          </fieldset>
+          <fieldset class="form-section">
+            <legend><span class="legend-line"></span> Paciente e atendimento</legend>
+            <div class="field-grid field-grid-two">
+              <label class="field field-span"><span>Nome do paciente <b aria-hidden="true">*</b></span><input name="paciente" type="text" maxlength="160" autocomplete="off" required aria-required="true" placeholder="Nome completo"></label>
+              <label class="field"><span>Data de nascimento <b aria-hidden="true">*</b></span><input name="nascimento" type="date" required aria-required="true"></label>
+              <label class="field"><span>Local de origem <b aria-hidden="true">*</b></span><input name="origem" type="text" maxlength="160" required aria-required="true" placeholder="Endereço ou unidade de origem"></label>
+              <label class="field field-span"><span>Tipo de atendimento <b aria-hidden="true">*</b></span><select name="tipo" required aria-required="true"><option value="" disabled selected>Selecione uma opção</option><option value="Emergência">Emergência</option><option value="Consulta/retorno">Consulta/retorno</option></select></label>
+            </div>
+          </fieldset>
+          <div class="form-actions"><button class="button button-primary" type="submit"><span class="button-icon" aria-hidden="true">＋</span> Salvar viagem</button><span class="action-hint">O ODS completo fica disponível no histórico, quando você quiser.</span></div>
+          <p id="form-status" class="status-message" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <aside class="side-rail">
+        <section class="departure-panel" aria-labelledby="departure-title">
+          <p class="eyebrow">SAÍDA COM FLEXIBILIDADE</p>
+          <h2 id="departure-title">Registre quando partir</h2>
+          <p>Não precisa esperar para salvar o atendimento. Deixe a saída em branco e informe o horário depois, pelo histórico.</p>
+          <a class="button button-outline" href="/baixar.html">Abrir histórico</a>
+        </section>
+        <section class="side-note"><span class="note-route" aria-hidden="true"></span><div><strong>Baixe quando precisar.</strong><p>No histórico, “Baixar ODS completo” reúne todos os registros salvos, na ordem de cadastro.</p></div></section>
+        <section class="side-note privacy-side-note"><span class="privacy-mark" aria-hidden="true">●</span><div><strong>Dados só neste navegador.</strong><p>Este site não envia informações de pacientes a um servidor. Mantenha uma cópia ODS segura.</p></div></section>
+      </aside>
+    </div>
+  </main>
+  <footer class="site-footer"><span>Controle de Ambulâncias</span><a href="/baixar.html">Próxima etapa: histórico e ODS →</a></footer>
+</body>
+</html>

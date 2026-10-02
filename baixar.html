@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0756A3">
+  <meta name="description" content="Consulte os atendimentos de ambulâncias, registre saídas pendentes e baixe uma planilha ODS completa.">
+  <title>Histórico e ODS — Controle de Ambulâncias</title>
+  <link rel="icon" type="image/svg+xml" href="/rota-symbol.svg">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/src/baixar.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="/" aria-label="Controle de Ambulâncias — início"><img src="/rota-symbol.svg" width="42" height="42" alt=""><span>Controle de <strong>Ambulâncias</strong></span></a>
+      <nav class="main-nav" aria-label="Navegação principal">
+        <a href="/cadastro.html">Cadastrar viagem</a>
+        <a class="active" aria-current="page" href="/baixar.html">Histórico e ODS</a>
+      </nav>
+    </div>
+  </header>
+  <main id="conteudo" class="page-main">
+    <div class="page-heading history-heading">
+      <div><p class="eyebrow"><span class="route-dash" aria-hidden="true"></span> ETAPA 02 / ACOMPANHAMENTO</p><h1>Histórico de viagens</h1><p class="page-intro">Consulte os registros e baixe, quando quiser, todos os dados salvos em ODS na ordem de cadastro.</p></div>
+      <button id="download-button" class="button button-primary download-button" type="button" disabled><span class="download-icon" aria-hidden="true">↓</span> Baixar ODS completo</button>
+    </div>
+
+    <section class="summary-strip" aria-label="Resumo do histórico">
+      <div class="summary-count"><span class="summary-label">REGISTROS</span><strong id="record-count">—</strong></div>
+      <div class="summary-count"><span class="summary-label">EMERGÊNCIAS</span><strong id="emergency-count">—</strong></div>
+      <div class="summary-count"><span class="summary-label">CONSULTAS / RETORNOS</span><strong id="consult-count">—</strong></div>
+      <div class="summary-count"><span class="summary-label">SAÍDAS PENDENTES</span><strong id="pending-count">—</strong></div>
+      <a class="summary-add" href="/cadastro.html"><span aria-hidden="true">＋</span> Nova viagem</a>
+    </section>
+
+    <section class="history-panel" aria-labelledby="history-title">
+      <div class="history-toolbar"><div><h2 id="history-title">Registros salvos</h2><p id="table-caption">O histórico é guardado neste navegador.</p></div><div class="filter-controls"><label class="search-field"><span class="visually-hidden">Buscar por paciente, motorista ou empresa</span><span aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="Buscar no histórico" autocomplete="off"></label><label class="filter-field"><span class="visually-hidden">Filtrar por tipo de atendimento</span><select id="type-filter"><option value="">Todos os atendimentos</option><option value="Emergência">Emergência</option><option value="Consulta/retorno">Consulta/retorno</option></select></label></div></div>
+      <div id="empty-state" class="empty-state" hidden><span class="empty-route" aria-hidden="true">01 ───── 02</span><h3>Seu histórico começa aqui.</h3><p>Cadastre uma viagem para acompanhar a ambulância e guardar seus registros.</p><a class="button button-primary" href="/cadastro.html">Cadastrar viagem</a></div>
+      <div id="table-wrap" class="table-wrap" hidden tabindex="0" aria-label="Tabela de registros; role para o lado para ver todas as colunas">
+        <table>
+          <caption class="visually-hidden">Registros de ambulâncias e atendimentos</caption>
+          <thead><tr><th scope="col">Entrada</th><th scope="col">Saída</th><th scope="col">Motorista</th><th scope="col">Empresa</th><th scope="col">Placa / prefixo</th><th scope="col">Paciente</th><th scope="col">Nascimento</th><th scope="col">Origem</th><th scope="col">Atendimento</th><th scope="col">Ações</th></tr></thead>
+          <tbody id="record-rows"></tbody>
+        </table>
+      </div>
+      <p id="no-results" class="no-results" hidden>Nenhum registro corresponde a esta busca.</p>
+      <p id="history-status" class="status-message" role="status" aria-live="polite"></p>
+    </section>
+
+    <aside class="privacy-note history-privacy"><span class="privacy-mark" aria-hidden="true">●</span><div><strong>Armazenamento local — sem sincronização entre aparelhos.</strong><p>O histórico fica neste perfil do navegador. O arquivo baixado contém todos os registros e pode servir como cópia de segurança.</p></div></aside>
+  </main>
+
+  <dialog id="edit-dialog" class="edit-dialog" aria-labelledby="edit-title">
+    <form id="edit-form" autocomplete="off">
+      <div class="dialog-heading"><div><p class="eyebrow">ATUALIZAR DADOS</p><h2 id="edit-title">Editar viagem</h2></div><button class="icon-button" type="button" data-close-dialog aria-label="Fechar">×</button></div>
+      <input type="hidden" name="id">
+      <div class="field-grid field-grid-two">
+        <label class="field"><span>Horário de entrada <b aria-hidden="true">*</b></span><input name="entrada" type="time" required></label>
+        <label class="field"><span>Horário de saída</span><input id="edit-saida" name="saida" type="time" aria-describedby="edit-saida-help"><small id="edit-saida-help" class="field-help">Opcional; preencha quando a ambulância partir.</small></label>
+        <label class="field"><span>Motorista <b aria-hidden="true">*</b></span><input name="motorista" type="text" maxlength="120" required></label>
+        <label class="field"><span>Empresa <b aria-hidden="true">*</b></span><input name="empresa" type="text" maxlength="120" required></label>
+        <label class="field field-span"><span>Placa ou prefixo <b aria-hidden="true">*</b></span><input name="veiculo" type="text" maxlength="40" required></label>
+        <label class="field field-span"><span>Nome do paciente <b aria-hidden="true">*</b></span><input name="paciente" type="text" maxlength="160" required></label>
+        <label class="field"><span>Data de nascimento <b aria-hidden="true">*</b></span><input name="nascimento" type="date" required></label>
+        <label class="field"><span>Local de origem <b aria-hidden="true">*</b></span><input name="origem" type="text" maxlength="160" required></label>
+        <label class="field field-span"><span>Tipo de atendimento <b aria-hidden="true">*</b></span><select name="tipo" required><option value="Emergência">Emergência</option><option value="Consulta/retorno">Consulta/retorno</option></select></label>
+      </div>
+      <p id="edit-status" class="status-message" role="status" aria-live="polite"></p>
+      <div class="dialog-actions"><button class="button button-outline" type="button" data-close-dialog>Cancelar</button><button class="button button-primary" type="submit">Salvar alterações</button></div>
+    </form>
+  </dialog>
+  <footer class="site-footer"><span>Controle de Ambulâncias</span><a href="/cadastro.html">← Cadastrar outra viagem</a></footer>
+</body>
+</html>
